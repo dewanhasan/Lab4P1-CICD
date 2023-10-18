@@ -15,19 +15,27 @@ public class UserController {
     private RegistrationServiceClient registrationServiceClient;
 
     @Autowired
-    public void injectedConstructor(RegistrationServiceClient registrationServiceClient){
+    public UserController(RegistrationServiceClient registrationServiceClient){
         this.registrationServiceClient = registrationServiceClient;
     }
 
-    @PostMapping("confirm-and-register")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/confirm-and-register")
+    public String confirmAndRegister(@RequestBody UserDetails userDetails) {
+        String confirm = registrationServiceClient.someDetails(userDetails);
+        return confirm;
+    }
+    /*
+    @PostMapping("/confirm-and-register")
+
     public Map<String, String> confirmAndRegister(@RequestBody UserDetails userDetails){
         String confirm = registrationServiceClient.someDetails(userDetails);
         Map<String, String> responseMessage = new HashMap<>();
         responseMessage.put("message", confirm);
-        System.out.println("name " +userDetails.getName());
-        System.out.println("email " +userDetails.getEmail());
+        //System.out.println("name " +userDetails.getName());
+        //System.out.println("email " +userDetails.getEmail());
         return responseMessage;
 
     }
+    */
+
 }
